@@ -1,0 +1,9 @@
+footer {
+    background-color: #d8efff;
+}
+
+footer > div > p {
+    padding: 10px;
+    margin: 0px;
+    text-align: center;
+}

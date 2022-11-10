@@ -1,0 +1,23 @@
+.fa {
+    font-size: 1.1em;
+}
+
+.bg-default-custom {
+    background-color: #6c757d;
+}
+
+.bg-success-custom {
+    background-color: #00c851;
+}
+
+.bg-info-custom {
+    background-color: #33b5e5;
+}
+
+.bg-danger-custom {
+    background-color: #ff3547;
+}
+
+.bg-warning-custom {
+    background-color: #fb3;
+}

@@ -1,0 +1,75 @@
+<!-- <div class="displayTable">
+    <div class="displayTableCell">
+      <div class="authBlock">
+        <h3>Sign In</h3>
+        <div class="formGroup">
+          <input type="text" class="formControl" placeholder="Username" #userName required>
+        </div>
+        <div class="formGroup">
+          <input type="password" class="formControl" placeholder="Password" #userPassword required>
+        </div>
+        <div class="formGroup">
+          <input type="button" class="btn btnPrimary" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">
+        </div>
+        <div class="formGroup">
+          <span class="or"><span class="orInner">Or</span></span>
+        </div>
+        <div class="formGroup">
+          <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
+            <i class="fab fa-google-plus-g"></i>
+            Log in with Google
+          </button>
+        </div>
+        <div class="forgotPassword">
+          <span routerLink="/forgot-password">Forgot Password?</span>
+        </div>
+      </div>
+      <div class="redirectToLogin">
+        <span>Don't have an account?<span class="redirect" routerLink="/register-user"> Sign Up</span></span>
+      </div>
+    </div>
+  </div> -->
+  
+
+
+  <!-- d-flex flex-column align-items-center justify-content-center -->
+
+
+<div class="d-flex w-100 h-100 align-items-center justify-content-center">
+  <div class="wrapper">
+    <div class="logo">
+      <img src="../../../assets/images/logo/logo-main.png" alt="Logo" style="padding: 10px;">
+    </div>
+    <div class="text-center mt-2 name">
+      Angular Firebase
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="(loginForm.controls.email.dirty)">
+        <small *ngIf="loginForm.controls.email.errors?.['required']" class="validation-error m-3">Email is
+          required</small>
+        <small *ngIf="loginForm.controls.email.errors?.['email']" class="validation-error m-3">Invalid email</small>
+      </div>
+      <div class="form-field d-flex align-items-center mt-4">
+        <span class="far fa-user"></span>
+        <input formControlName="email" autocomplete="off" type="email" placeholder="Email">
+      </div>
+      <div *ngIf="loginForm.controls.password.dirty">
+        <small *ngIf="loginForm.controls.password.errors?.['required']" class="validation-error m-3">Password is
+          required</small>
+        <small *ngIf="loginForm.controls.password.errors?.['minlength']" class="validation-error m-3">Minimum length is
+          5</small>
+      </div>
+      <div class="form-field d-flex align-items-center">
+        <span class="fas fa-key"></span>
+        <input formControlName="password" type="password" placeholder="Password">
+      </div>
+      <div class="text-center fs-6">
+        <small *ngIf="errorMessage" class="validation-error">{{errorMessage}}</small>
+      </div>
+      <button class="btn mt-3" type="submit">Login</button>
+    </form>
+    <div class="text-center fs-6">
+      <a href="/forgot-password">Forget password?</a> <small class="text-muted"> or </small> <a href="/signup">Sign up</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div *ngIf="authService.userData as user" class="d-flex h-100 w-100 align-items-center justify-content-center">
+  <div *ngIf="!user.emailVerified; else alreadyVerified" class="content-holder text-center mt-5 mb-5">
+    <h3 class="text-info">Thank You for Registering</h3>
+
+    <p class="text-secondary m-0 mt-3">We have sent a confirmation email to <strong>{{user.email}}</strong>.</p>
+    <p class="text-secondary m-0">Please check your email and click on the link to verfiy your email address.</p>
+    <p class="text-muted m-0">(Note: Also check in spam folder)</p>
+
+    <div class="mt-5">
+      <span>Didn't receive verification email yet?</span>
+    </div>
+    <button type="button" class="mt-2 btn custom-neon-blue-button"
+      (click)="authService.SendVerificationMail()">
+      <i class="fas fa-redo-alt"></i>
+      Resend Verification Email
+    </button>
+
+    <div class="mt-5">
+      <span>If account has already been verified please refresh this page</span>
+    </div>
+    <button type="button" class="mt-2 btn custom-neon-blue-button"
+      (click)="refresh()">
+      <i class="fas fa-redo-alt"></i>
+      Refresh
+    </button>
+  </div>
+
+  <ng-template #alreadyVerified>
+    <div class="card text-center" style="max-width: 19rem; box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px !important; border: none;">
+      <!-- <div class="card-header text-center"> Verified </div> -->
+      <div class="card-header">
+        <div class="card-title" style="margin: auto; font-weight: 500;">Verified</div>
+      </div>
+      <!-- <h5 class="card-title">Special title treatment</h5> -->
+      <img src="../../../assets/images/verified/verified.gif" class="card-img-top" alt="Verified"/>
+      <div class="card-body">
+        <!-- <h5 class="card-title">Verified</h5> -->
+        <p class="card-text">This account has already been verified</p>
+        <a href="/dashboard" class="btn custom-neon-blue-button text-white">Go to Dashboard</a>
+      </div>
+    </div>
+  </ng-template>
+</div>

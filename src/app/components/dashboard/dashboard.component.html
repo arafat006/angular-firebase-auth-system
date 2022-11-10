@@ -1,0 +1,46 @@
+<div class="d-flex w-100 h-100 justify-content-center align-items-center" *ngIf="authService.userData as user">
+  
+  <div class="card" style="width: fit-content;">
+    <div class="m-3 d-flex justify-content-center">
+      <ngx-avatar name="{{user.displayName ? user.displayName : 'N / A'}}" size="100" [round]="true"></ngx-avatar>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title text-center">{{user.displayName ? user.displayName : 'N / A'}}</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Email: <i class="text-muted remove-italic">{{user.email}}</i></li>
+      <li class="list-group-item">UID: <i class="text-muted remove-italic">{{user.uid}}</i></li>
+      <li class="list-group-item">Tenant ID: <i class="text-muted remove-italic">{{user.tenantId ?? 'None'}}</i></li>
+    </ul>
+    
+    <!-- <ul class="list-group list-group-flush">
+      <li class="list-group-item">Cras justo odio</li>
+      <li class="list-group-item">Dapibus ac facilisis in</li>
+      <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
+    <div class="card-body">
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>
+    </div> -->
+  </div>
+
+</div>
+
+
+
+
+<!-- Sidebar navigation -->
+<!-- <div class="row ">
+  <div class="row" *ngIf="authService.userData as user">
+    <div class="col-md-12">
+      <div class="media">
+        <div class="media-body">
+          <h1>Hello: <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong></h1>
+          <p>User ID: <strong>{{user.uid}}</strong></p>
+          <p>Email: <strong>{{user.email}}</strong></p>
+          <p>Email Verified: <strong>{{user.emailVerified}}</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

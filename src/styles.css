@@ -1,1 +1,129 @@
 /* You can add global styles to this file, and also import other style files */
+body { 
+    padding-right: 0 !important 
+}
+
+.main-title {
+    font-weight: 500;
+    font-family: Verdana;
+}
+
+.neon-blue-text {
+    color: #03A9F4 !important;
+}
+
+.custom-neon-blue-button-outline {
+    background-color: transparent;
+    font-family: var(--bs-btn-font-family);
+    font-size: var(--bs-btn-font-size);
+    font-weight: var(--bs-btn-font-weight);
+    line-height: var(--bs-btn-line-height);
+    color: #03A9F4 !important;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border: var(--bs-btn-border-width) solid #03A9F4;
+    border-radius: var(--bs-btn-border-radius);
+}
+
+.custom-neon-blue-button-outline:hover {
+    background-color: #03A9F4;
+    font-family: var(--bs-btn-font-family);
+    font-size: var(--bs-btn-font-size);
+    font-weight: var(--bs-btn-font-weight);
+    line-height: var(--bs-btn-line-height);
+    color: #fff !important;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border: var(--bs-btn-border-width) solid #03A9F4;
+    border-radius: var(--bs-btn-border-radius);
+}
+
+.custom-neon-blue-button {
+    background-color: #03A9F4 !important;
+    font-family: var(--bs-btn-font-family);
+    font-size: var(--bs-btn-font-size);
+    font-weight: var(--bs-btn-font-weight);
+    line-height: var(--bs-btn-line-height);
+    color: #fff !important;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border: var(--bs-btn-border-width) solid #03A9F4 !important;
+    border-radius: var(--bs-btn-border-radius);
+}
+
+.custom-neon-blue-button:hover {
+    background-color: #039BE5 !important;
+    border: var(--bs-btn-border-width) solid #039BE5 !important;
+}
+
+.custom-neon-blue-button-active {
+    background-color: #039BE5 !important;
+    font-family: var(--bs-btn-font-family);
+    font-size: var(--bs-btn-font-size);
+    font-weight: var(--bs-btn-font-weight);
+    line-height: var(--bs-btn-line-height);
+    color: #fff !important;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border: var(--bs-btn-border-width) solid #039BE5 !important;
+    border-radius: var(--bs-btn-border-radius);
+}
+
+.visible {
+    visibility: visible;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.error-border {
+    border: 1px solid salmon;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: .5;
+}
+
+.custom-cursor-pointer {
+    cursor: pointer;
+}
+
+.active {
+    /* font-weight: 500; */
+}
+
+.profile-user-name {
+    color: var(--bs-dropdown-link-color) !important;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+}
+
+.validation-error{
+    font-style: italic;
+    color: rgba(255, 0, 0, 0.8);
+}
