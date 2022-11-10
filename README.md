@@ -1,6 +1,14 @@
 # AngularFirebase
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0. by MD. Arafat Hossain
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0. by MD. Arafat Hossain. 
+
+## Included
+`Module`
+`Component`
+`Service`
+`enum`
+`interface`
+`Guard`
 
 ## Development server
 
@@ -12,7 +20,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/angular-firebase` directory.
 ng build --configuration production (Optional)
 
 ## Running unit tests
