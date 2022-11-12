@@ -14,6 +14,37 @@
                     <a class="nav-link {{ !authService.isLoggedIn ? 'd-none' : '' }}" routerLink="dashboard" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}>Dashboard</a>
                 </li>
 
+                <li class="nav-item d-md-block d-lg-none" *ngIf="authService.userData as user">
+                    <div class="ms-2 btn-group user-profile-dropdown" *ngIf="authService.userData as user">
+                        <ngx-avatar class="custom-cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20"
+                            name="{{user.displayName ? user.displayName : 'N / A'}}" size="36" [round]="true"></ngx-avatar>
+    
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li  class="custom-cursor-pointer">
+                                <button class="dropdown-item profile-user-name" type="button" disabled>
+                                    <div class="profile-avatar-icon me-2">
+                                        <ngx-avatar name="{{user.displayName ? user.displayName : 'N / A'}}" size="25" [round]="true"></ngx-avatar>
+                                    </div>
+                                    {{user.displayName ? user.displayName : 'N / A'}}
+                                    <img class="remove-padding"
+                                    title="{{user.emailVerified ? 'Verified' : 'Not Verified'}}"
+                                    src="{{user.emailVerified ? '../../../assets/images/verified/verified.png' : '../../../assets/images/verified/not-verified.png'}}"
+                                    alt="{{user.emailVerified ? 'Verified' : 'Not Verified'}}" height="15px" width="15px">
+                                </button>
+                            </li>
+                            <div *ngIf="user.emailVerified">
+                                <li><button class="dropdown-item" type="button">Edit Profile</button></li>
+                                <li><button class="dropdown-item" type="button">Settings</button></li>
+                            </div>
+                            
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><button class="dropdown-item" type="button" (click)="authService.SignOut()">Logout</button></li>
+                        </ul>
+                    </div>
+                </li>
+                
                 <!-- Auth Buttons -->
                 <li class="nav-item">
                     <a class="nav-link {{ authService.isLoggedIn ? 'd-none' : 'd-md-block d-lg-none' }}" routerLink="login" routerLinkActive="active">Login</a>
@@ -21,9 +52,9 @@
                 <li class="nav-item">
                     <a class="nav-link {{ authService.isLoggedIn ? 'd-none' : 'd-md-block d-lg-none' }}" routerLink="signup" routerLinkActive="active">Signup</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link d-md-block d-lg-none custom-cursor-pointer" (click)="authService.SignOut()">Logout</a>
-                </li>
+                </li> -->
             </ul>
             <form class="d-flex align-items-center d-none d-lg-block">
                 <button routerLink="login" routerLinkActive="active" #loginButton="routerLinkActive" class="{{ loginButton.isActive ? 'custom-neon-blue-button-active' : 'custom-neon-blue-button-outline'}} btn me-2 {{ authService.isLoggedIn ? 'd-none' : '' }}">Login</button>

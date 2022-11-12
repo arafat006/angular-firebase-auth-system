@@ -38,8 +38,8 @@ export class SignInComponent implements OnInit {
 
   buildLoginForm(): void{
     this.loginForm = this.formBuilder.group({
-      email: ['arafathossainarafat6@gmail.com', [Validators.email, Validators.required]],
-      password: ['123456', [Validators.required, Validators.minLength(6)]]
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
