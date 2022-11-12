@@ -15,6 +15,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingHelperService.removeLoadingOverlay();
-    console.log(this.authService.userData);
+    // console.log(this.authService.userData);
   }
 }
