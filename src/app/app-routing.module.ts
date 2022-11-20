@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddBookComponent } from './components/add-book/add-book.component';
+import { BooksComponent } from './components/books/books.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedInGuard, VerifiedGuard] }, //[AuthGuard]
   { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NotLoggedInGuard] }, //, canActivate: [AuthGuard]
   { path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [LoggedInGuard] },
+  { path: 'books', component: BooksComponent, canActivate: [LoggedInGuard, VerifiedGuard] },
+  { path: 'add-book', component: AddBookComponent, canActivate: [LoggedInGuard, VerifiedGuard] },
   { path: '**', redirectTo: '/dashboard' },
 ];
 

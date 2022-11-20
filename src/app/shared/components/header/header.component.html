@@ -13,6 +13,13 @@
                 <li class="nav-item">
                     <a class="nav-link {{ !authService.isLoggedIn ? 'd-none' : '' }}" routerLink="dashboard" routerLinkActive="active" [routerLinkActiveOptions]={exact:true}>Dashboard</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ !authService.isLoggedIn ? 'd-none' : '' }}" routerLink="books" routerLinkActive="active">Books</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ !authService.isLoggedIn ? 'd-none' : '' }}" routerLink="add-book" routerLinkActive="active">Add new</a>
+                </li>
 
                 <li class="nav-item d-md-block d-lg-none" *ngIf="authService.userData as user">
                     <div class="ms-2 btn-group user-profile-dropdown" *ngIf="authService.userData as user">

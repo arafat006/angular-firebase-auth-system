@@ -24,6 +24,9 @@ import { NgToastModule } from 'ng-angular-popup';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { PopupMessageComponent } from './shared/modals/popup-message/popup-message.component';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { BooksComponent } from './components/books/books.component';
+import { FormsModule } from '@angular/forms';
+import { AddBookComponent } from './components/add-book/add-book.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,8 @@ import { AuthGuard } from './shared/guard/auth.guard';
     HeaderComponent,
     FooterComponent,
     PopupMessageComponent,
+    BooksComponent,
+    AddBookComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -48,6 +53,7 @@ import { AuthGuard } from './shared/guard/auth.guard';
     FontAwesomeModule,
     BrowserAnimationsModule,
     MdbModalModule,
+    FormsModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

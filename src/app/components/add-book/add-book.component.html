@@ -1,0 +1,34 @@
+<div class="container-xxl p-4">
+    <div class="card mb-4" style="width: 30rem">
+        <div class="card-body">
+            <h5 class="card-title mb-4">New Sandwich</h5>
+            <form>
+                <div class="form-group mb-2">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" type="text" class="form-control" [(ngModel)]="newBook.title" />
+                </div>
+                <div class="form-group mb-2">
+                    <label for="name">Description</label>
+                    <input id="description" name="description" type="text" class="form-control" [(ngModel)]="newBook.description" />
+                </div>
+                <div class="form-group mb-2">
+                    <label for="name">Author</label>
+                    <input id="author" name="author" class="form-control" [(ngModel)]="newBook.author" />
+                </div>
+                <div class="form-group mb-2">
+                    <label for="name">Publisher</label>
+                    <input id="publisher" name="publisher" class="form-control" [(ngModel)]="newBook.publisher" />
+                </div>
+                <div class="form-group mb-2">
+                    <label for="name">Uploaded By</label>
+                    <input id="uploadedBy" name="uploadedBy" class="form-control" [(ngModel)]="newBook.uploadedBy" />
+                </div>
+                <div class="form-group mb-2">
+                    <label for="name">Approved By</label>
+                    <input id="approvedBy" name="approvedBy" class="form-control" [(ngModel)]="newBook.approvedBy" />
+                </div>
+                <button class="btn btn-primary" type="submit" (click)="addBook()">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
