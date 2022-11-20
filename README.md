@@ -9,6 +9,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 `enum`
 `interface`
 `Guard`
+`Firebase Auth`
+`Firestore CRUD`
 
 ## Development server
 
