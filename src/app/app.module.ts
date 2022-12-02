@@ -27,6 +27,10 @@ import { AuthGuard } from './shared/guard/auth.guard';
 import { BooksComponent } from './components/books/books.component';
 import { FormsModule } from '@angular/forms';
 import { AddBookComponent } from './components/add-book/add-book.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { AddMovieComponent } from './components/add-movie/add-movie.component';
+// import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -41,6 +45,9 @@ import { AddBookComponent } from './components/add-book/add-book.component';
     PopupMessageComponent,
     BooksComponent,
     AddBookComponent,
+    UserManagementComponent,
+    EditUserComponent,
+    AddMovieComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -53,7 +60,8 @@ import { AddBookComponent } from './components/add-book/add-book.component';
     FontAwesomeModule,
     BrowserAnimationsModule,
     MdbModalModule,
-    FormsModule
+    FormsModule,
+    // NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

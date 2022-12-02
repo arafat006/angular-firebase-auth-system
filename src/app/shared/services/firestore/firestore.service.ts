@@ -11,7 +11,6 @@ export class FirestoreService {
 
   }
 
-
   getAllUsers() {
     return new Promise<any>((resolve) => {
       this.angularFirestore.collection('User').valueChanges({ idField: 'id' }).subscribe(users => resolve(users));

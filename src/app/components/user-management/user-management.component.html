@@ -1,0 +1,28 @@
+<div class="container-xxl mt-4 mb-4">
+    <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+        <div class="col" *ngFor="let user of userList">
+            <div class="card h-100">
+                <div class="d-flex align-items-center justify-content-center pt-3 pb-3">
+                    <ngx-avatar name="{{user.displayName ? user.displayName : 'N / A'}}" size="72" [round]="true"></ngx-avatar>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.displayName ? user.displayName : 'Name Not Set' }} <a [routerLink]="['/edit-user', user.uid]" class="fa-solid fa-pen-to-square custom-cursor-pointer" title="Edit User"></a></h5>
+                    <p class="card-text">{{ user.email }}</p>
+                </div>
+                <ul class="list-group list-group-flush" style="font-size: 14px;">
+                    <li class="list-group-item">UID: <span class="text-muted">{{ user.uid }}</span></li>
+                    <li class="list-group-item">Verified: <span class="text-muted">{{ user.emailVerified }}</span></li>
+                    <li class="list-group-item">Tenant ID: <span class="text-muted">{{ user.tenantId ? user.tenantId : 'None' }}</span></li>
+                    <li class="list-group-item">Role: <span class="text-muted">{{ user.role ? user.role : 'USER' }}</span></li>
+                    <li class="list-group-item">Disabled: <span class="text-muted">{{ user.isDisabled ? user.isDisabled : false }}</span></li>
+                </ul>
+                <div class="card-footer">
+                    <small class="text-muted">Created at: {{ 'Not Available' }}</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

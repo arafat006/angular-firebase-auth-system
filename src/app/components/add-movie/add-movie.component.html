@@ -1,0 +1,53 @@
+<form [formGroup]="movieForm" class="add-movie-form" (ngSubmit)="onSubmit()">
+    <h4 class="text-center">Add Movie</h4>
+    <hr>
+
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input formControlName="title" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label for="url" class="form-label">URL</label>
+        <input formControlName="url" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label for="category" class="form-label">Category</label>
+        <input formControlName="category" class="form-control">
+
+        <!-- <ng-multiselect-dropdown
+            [placeholder]="'custom placeholder'"
+            [settings]="dropdownSettings"
+            [data]="dropdownList"
+            [(ngModel)]="selectedItems"
+            (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)">
+        </ng-multiselect-dropdown> -->
+
+        <!-- <div class="container mt-5">
+            <select class="selectpicker" multiple aria-label="size 3 select example">
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+                <option value="4">Four</option>
+            </select>
+        </div> -->
+    </div>
+
+    <div class="mb-3">
+        <label for="published" class="form-label">Published</label>
+        <select formControlName="published" class="form-select" aria-label="Default published">
+            <option *ngFor="let booleanEnum of booleanEnumList" [ngValue]="booleanEnum" [selected]="booleanEnum === movieForm.value.published">{{ booleanEnum }}</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="private" class="form-label">Private</label>
+        <select formControlName="private" class="form-select" aria-label="Default private">
+            <option *ngFor="let booleanEnum of booleanEnumList" [ngValue]="booleanEnum" [selected]="booleanEnum === movieForm.value.private">{{ booleanEnum }}</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>

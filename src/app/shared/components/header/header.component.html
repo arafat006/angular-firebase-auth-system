@@ -21,6 +21,14 @@
                     <a class="nav-link {{ !authService.isLoggedIn ? 'd-none' : '' }}" routerLink="add-book" routerLinkActive="active">Add new</a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link {{ (!firestoreUsersService.isAdmin && !firestoreUsersService.isSuperAdmin) ? 'd-none' : '' }}" routerLink="user-management" routerLinkActive="active">User Management</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="add-movie" routerLinkActive="active">Add Movie</a>
+                </li>
+
                 <li class="nav-item d-md-block d-lg-none" *ngIf="authService.userData as user">
                     <div class="ms-2 btn-group user-profile-dropdown" *ngIf="authService.userData as user">
                         <ngx-avatar class="custom-cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20"

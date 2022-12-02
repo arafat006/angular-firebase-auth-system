@@ -12,6 +12,18 @@
       <li class="list-group-item">UID: <i class="text-muted remove-italic">{{user.uid}}</i></li>
       <li class="list-group-item">Tenant ID: <i class="text-muted remove-italic">{{user.tenantId ?? 'None'}}</i></li>
     </ul>
+
+    <ul class="list-group list-group-flush" *ngIf="firestoreUsersService.firestoreUser as firebaseUser">
+
+      <li class="list-group-item">uid: <i class="text-muted remove-italic">{{firebaseUser.uid}}</i></li>
+      <li class="list-group-item">email: <i class="text-muted remove-italic">{{firebaseUser.email}}</i></li>
+      <li class="list-group-item">displayName: <i class="text-muted remove-italic">{{firebaseUser.displayName}}</i></li>
+      <li class="list-group-item">photoURL: <i class="text-muted remove-italic">{{firebaseUser.photoURL}}</i></li>
+      <li class="list-group-item">emailVerified: <i class="text-muted remove-italic">{{firebaseUser.emailVerified}}</i></li>
+      <li class="list-group-item">tenantId: <i class="text-muted remove-italic">{{firebaseUser.tenantId}}</i></li>
+      <li class="list-group-item">role: <i class="text-muted remove-italic">{{firebaseUser.role}}</i></li>
+      <li class="list-group-item">isDisabled: <i class="text-muted remove-italic">{{firebaseUser.isDisabled}}</i></li>
+    </ul>
     
     <!-- <ul class="list-group list-group-flush">
       <li class="list-group-item">Cras justo odio</li>
