@@ -1,4 +1,4 @@
 export enum FirebaseCollection {
-    UserTable = 'users',
-    MovieTable = 'movies',
+    User = 'users',
+    Movie = 'movies',
 }

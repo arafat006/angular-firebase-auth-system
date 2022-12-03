@@ -1,10 +1,14 @@
+import { FirestoreUploader } from "./firestore-uploader";
+
 export interface FirestoreMovie {
     uid: string;
     title: string;
-    url: string;
-    category: string[];
+    videoUrl: string;
+    imgUrl: string;
+    genre: string[];
     uploadedByUid: string;
-    uploadedDate: Date;
-    published: boolean;
+    uploadedDate: any;
+    releasedYear: number;
     private: boolean;
+    uploader?: FirestoreUploader;
 }

@@ -20,23 +20,23 @@ export class FirestoreUsersService {
   }
 
   getAllUsers() {
-    return this.angularFirestore.collection<any>(FirebaseCollection.UserTable,
+    return this.angularFirestore.collection<any>(FirebaseCollection.User,
       ref => ref.orderBy("email")
     ).valueChanges();
   }  
 
   getUser(uid: string) {
-    return this.angularFirestore.collection(FirebaseCollection.UserTable).doc(uid).get();
+    return this.angularFirestore.collection(FirebaseCollection.User).doc(uid).get();
   }  
 
   updateUser(uid: string, user: FirestoreUser) {
-    return this.angularFirestore.collection(FirebaseCollection.UserTable).doc(uid).update(user);
+    return this.angularFirestore.collection(FirebaseCollection.User).doc(uid).update(user);
   }  
 
   rolePromise = new Promise<void>((resolve, reject) => {
     this.authService.authPromise.then(() => {
       if (this.authService.isLoggedIn === true) {
-        const userRef = this.angularFirestore.collection(FirebaseCollection.UserTable).doc(this.authService.userData.uid);
+        const userRef = this.angularFirestore.collection(FirebaseCollection.User).doc(this.authService.userData.uid);
         userRef.get().subscribe(user => {
           if (user.exists) {
             this.firestoreUser = user.data() as FirestoreUser;

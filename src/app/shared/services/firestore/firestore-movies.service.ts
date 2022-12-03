@@ -16,25 +16,33 @@ export class FirestoreMoviesService {
 
   }
 
+  // getAllMovies() {
+  //   return this.angularFirestore.collection<any>(FirebaseCollection.Movie,
+  //     ref => ref
+  //   ).valueChanges();
+  // }  
+
   getAllMovies() {
-    return this.angularFirestore.collection<any>(FirebaseCollection.MovieTable,
-      ref => ref
-    ).valueChanges();
-  }  
+    return new Promise<any>((resolve) => {
+      this.angularFirestore.collection(FirebaseCollection.Movie).valueChanges({ idField: 'id' }).subscribe(movies => resolve(movies));
+    });
+  }
 
   addMovie(movie: FirestoreMovie) {
-    return this.angularFirestore.collection(FirebaseCollection.MovieTable).add(movie);
+    return this.angularFirestore.collection(FirebaseCollection.Movie).add(movie);
   }
 
   updateMovie(uid: string, movie: FirestoreMovie) {
-    return this.angularFirestore.collection(FirebaseCollection.MovieTable).doc(uid).update(movie);
+    return this.angularFirestore.collection(FirebaseCollection.Movie).doc(uid).update(movie);
   } 
 
   getMovie(uid: string) {
-    return this.angularFirestore.collection(FirebaseCollection.MovieTable).doc(uid).get();
+    return new Promise<any>((resolve) => {
+      this.angularFirestore.collection(FirebaseCollection.Movie).doc(uid).valueChanges({ idField: 'uid' }).subscribe(movies => resolve(movies));
+    });
   }  
 
   deleteBook(uid: string) {
-    return this.angularFirestore.doc(`${FirebaseCollection.MovieTable}/${uid}`).delete();
+    return this.angularFirestore.doc(`${FirebaseCollection.Movie}/${uid}`).delete();
   }
 }

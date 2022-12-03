@@ -1,7 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { BooleanEnum } from 'src/app/shared/enums/boolean.enum';
 import { CategoryEnum } from 'src/app/shared/enums/category.enum';
 import { ModalPopupType } from 'src/app/shared/enums/modal-popup-type.enum';
@@ -22,19 +24,12 @@ export class AddMovieComponent implements OnInit {
   
   movieForm: any;
   booleanEnumList = Object.values(BooleanEnum);
+  categoryList = this.fixSortAlphabetThenNumber(Object.values(CategoryEnum).sort());
   modalRef: MdbModalRef<PopupMessageComponent> | null = null;
+  categoryMultiselectSettings: IDropdownSettings = {};
+  releaseYearMultiselectSettings: IDropdownSettings = {};
+  yearList: number[] = this.getYearList(1800, new Date().getFullYear()).sort((a, b) => b - a);
 
-  dropdownList: any[] = [];
-  selectedItems: any[] = [];
-  dropdownSettings: any = {};
-
-  onItemSelect(item: any) {
-    console.log(item);
-  }
-  onSelectAll(items: any) {
-    console.log(items);
-  }
-  
   constructor(public authService: AuthService,
     public firestoreService: FirestoreService, 
     public loadingHelperService: LoadingHelperService, 
@@ -44,40 +39,55 @@ export class AddMovieComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.dropdownList = [
-      { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' }
-    ];
-    this.selectedItems = [
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' }
-    ];
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true
+    this.categoryMultiselectSettings = {
+      allowSearchFilter: true,
+      searchPlaceholderText: 'Search Genre'
+    };
+
+    this.releaseYearMultiselectSettings = {
+      allowSearchFilter: true,
+      searchPlaceholderText: 'Search Year',
+      singleSelection: true,
     };
 
     this.loadingHelperService.removeLoadingOverlay();
     this.buildAddMovieForm();
   }
 
+  fixSortAlphabetThenNumber(list: string[]) {
+    for (let i = 0; i < list.length; i++) {
+      if ('0' <= list[i][0] && list[i][0] <= '9') {
+        let item = list.shift();
+        if (item) {
+          list.push(item);
+        }
+      }
+      else {
+        break;
+      }
+    }
+
+    return list;
+  }
+
+  getYearList(min: number, max: number) {
+    let yearList = [];
+    for(min; min <= max; min++) {
+      yearList.push(min);
+    }
+    return yearList;
+  }
+
   buildAddMovieForm(): void {
     this.movieForm = this.formBuilder.group({
-      title: ['Test Movie 1', [Validators.required, Validators.minLength(1)]],
-      url: ['link123', [Validators.required]],
-      category: [[CategoryEnum.Survival], [Validators.required]],
+      title: ['', [Validators.required, Validators.minLength(1)]],
+      genre: [[], [Validators.required]],
+      imgUrl: ['', [Validators.required]],
+      videoUrl: ['', [Validators.required, Validators.minLength(1)]],
+      releasedYear: [null, [Validators.required]],
       uploadedByUid: [this.authService.userData.uid, [Validators.required]],
-      uploadedDate: [''],
-      published: [BooleanEnum.true, [Validators.required]],
-      private: [BooleanEnum.false, [Validators.required]],
+      uploadedDate: [new Date().toUTCString()],
+      private: [BooleanEnum.true, [Validators.required]]
     });
   }
 
@@ -93,8 +103,8 @@ export class AddMovieComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.movieForm.value);
-    console.log(this.movieForm.valid);
+    this.movieForm.value.uploadedDate = new Date();
+    this.movieForm.value.releasedYear = this.movieForm.value.releasedYear[0];
 
     if(this.movieForm.valid) { 
       this.firestoreMoviesService.addMovie(this.movieForm.value).then(() => {

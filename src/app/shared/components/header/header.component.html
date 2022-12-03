@@ -29,6 +29,14 @@
                     <a class="nav-link" routerLink="add-movie" routerLinkActive="active">Add Movie</a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="movies" routerLinkActive="active">Movies</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="movie-theater/b2rR8gUl11Bf0w1IzzbY" routerLinkActive="active">Movie Theater</a>
+                </li>
+
                 <li class="nav-item d-md-block d-lg-none" *ngIf="authService.userData as user">
                     <div class="ms-2 btn-group user-profile-dropdown" *ngIf="authService.userData as user">
                         <ngx-avatar class="custom-cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="10,20"

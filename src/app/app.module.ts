@@ -30,7 +30,9 @@ import { AddBookComponent } from './components/add-book/add-book.component';
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { AddMovieComponent } from './components/add-movie/add-movie.component';
-// import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MoviesComponent } from './components/movies/movies.component';
+import { MovieTheaterComponent } from './components/movie-theater/movie-theater.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { AddMovieComponent } from './components/add-movie/add-movie.component';
     UserManagementComponent,
     EditUserComponent,
     AddMovieComponent,
+    MoviesComponent,
+    MovieTheaterComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -61,7 +65,7 @@ import { AddMovieComponent } from './components/add-movie/add-movie.component';
     BrowserAnimationsModule,
     MdbModalModule,
     FormsModule,
-    // NgMultiSelectDropDownModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
