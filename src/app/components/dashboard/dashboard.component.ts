@@ -10,12 +10,22 @@ import { LoadingHelperService } from 'src/app/shared/services/loading/loading-he
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(public authService: AuthService, public loadingHelperService: LoadingHelperService, public firestoreUsersService: FirestoreUsersService) {
+  constructor(public authService: AuthService, 
+    public loadingHelperService: LoadingHelperService, 
+    public firestoreUsersService: FirestoreUsersService) {
     
   }
 
   ngOnInit(): void {
-    this.loadingHelperService.removeLoadingOverlay();
-    // console.log(this.authService.userData);
+    
+    this.getUserData();
+  }
+
+  async getUserData() {
+    this.firestoreUsersService.rolePromise.then(() => {
+      this.loadingHelperService.removeLoadingOverlay();
+    }).catch(() => {
+      this.loadingHelperService.removeLoadingOverlay();
+    });
   }
 }

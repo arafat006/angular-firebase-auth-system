@@ -6,7 +6,7 @@ import { BooksComponent } from './components/books/books.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { MovieTheaterComponent } from './components/movie-theater/movie-theater.component';
+import { ManageMoviesComponent } from './components/manage-movies/manage-movies.component';
 import { MoviesComponent } from './components/movies/movies.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -35,7 +35,8 @@ const routes: Routes = [
   { path: 'edit-user/:uid', component: EditUserComponent, canActivate: [LoggedInGuard, VerifiedGuard, RoleGuard], data: { allowedRoles: [Role.SuperAdmin, Role.Admin] } },
   { path: 'add-movie', component: AddMovieComponent, canActivate: [LoggedInGuard, VerifiedGuard, RoleGuard], data: { allowedRoles: [Role.SuperAdmin, Role.Admin, Role.Contributor] } },
   { path: 'movies', component: MoviesComponent },
-  { path: 'movie-theater/:uid', component: MovieTheaterComponent },
+  { path: 'movie-management', component: ManageMoviesComponent },
+  { path: 'edit-movie/:uid', component: AddMovieComponent },
   { path: '**', redirectTo: '/dashboard' },
 ];
 

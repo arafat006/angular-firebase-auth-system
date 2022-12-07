@@ -1,4 +1,4 @@
-export enum FirebaseCollection {
+export enum FirestoreCollection {
     User = 'users',
     Movie = 'movies',
 }

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { FirestoreUser } from '../models/firestore-user';
-import { FirebaseCollection } from '../enums/firebase-collection';
+import { FirestoreCollection } from '../enums/firestore-collection';
 
 @Injectable({
   providedIn: 'root',
@@ -151,7 +151,7 @@ export class AuthService {
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   setUserData(user: any, displayName?: string) {
     const userRef: AngularFirestoreDocument<any> = this.angularFirestore.doc(
-      `${FirebaseCollection.User}/${user.uid}`
+      `${FirestoreCollection.User}/${user.uid}`
     );
     const userData: User = {
       uid: user.uid,

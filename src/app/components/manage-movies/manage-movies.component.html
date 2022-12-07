@@ -2,17 +2,21 @@
     <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div class="col" *ngFor="let movie of movies">
             <div class="card-parent">
-                <div class="card h-100 custom-cursor-pointer" (click)="gotoUrl(movie.videoUrl)">
-                    <img [src]="movie.imgUrl" class="card-img-top" alt="Movie poster">
+                <div class="card h-100">
+                    <img [src]="movie.imgUrl" class="card-img-top" alt="{{movie.title}}">
                     <div class="card-body">
-                        <h6 class="card-title">{{ movie.title }} ({{ movie.releasedYear }})</h6>
+                        <h6 class="card-title">{{ movie.title }} 
+                            <a [routerLink]="['/edit-movie', movie.uid]" class="fa-solid fa-pen-to-square custom-cursor-pointer" title="Edit"></a>
+                            <a class="fa-solid fa-trash-can ms-1 text-danger custom-cursor-pointer" (click)="deleteConfirmation(movie.uid ?? '')"  title="Delete"></a>
+                        </h6>
                     </div>
                     <ul class="list-group list-group-flush font-size-14px">
+                        <li class="list-group-item">Released Year: <span class="text-muted">{{ movie.releasedYear }}</span></li>
                         <li class="list-group-item d-flex flex-row flex-wrap">Genre: 
                             <span class="me-2"></span>
                             <span *ngFor="let genre of movie.genre" class="border border-secondary rounded-pill ps-2 pe-2 me-1 small text-muted" style="margin-top: 1px; margin-bottom: 2px">{{ genre }}</span>
                         </li>
-                        <li class="list-group-item">Uploaded By: <span class="text-muted">{{ isOwner(movie.uploader?.uid) ? 'Me' : movie.uploader?.displayName }}</span></li>
+                        <li class="list-group-item">Private: <span class="text-muted">{{ miscellaneousService.BooleanCustomConverter(movie.private) }}</span></li>
                     </ul>
                     <div class="card-footer">
                         <small class="text-muted">Upload Date: {{ movie.uploadedDate.toDate() | date:'dd-MM-yyyy' }}</small>

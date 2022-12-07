@@ -1,19 +1,22 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { BooleanEnum } from 'src/app/shared/enums/boolean.enum';
 import { CategoryEnum } from 'src/app/shared/enums/category.enum';
+import { FirestoreCollection } from 'src/app/shared/enums/firestore-collection';
 import { ModalPopupType } from 'src/app/shared/enums/modal-popup-type.enum';
 import PopupConfig from 'src/app/shared/modals/popup-config/popup-config';
 import { PopupMessageComponent } from 'src/app/shared/modals/popup-message/popup-message.component';
 import { FirestoreMovie } from 'src/app/shared/models/firestore-movie';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FirestoreCollectionManagementService } from 'src/app/shared/services/firestore/firestore-collection-management.service';
 import { FirestoreMoviesService } from 'src/app/shared/services/firestore/firestore-movies.service';
 import { FirestoreService } from 'src/app/shared/services/firestore/firestore.service';
 import { LoadingHelperService } from 'src/app/shared/services/loading/loading-helper.service';
+import { MiscellaneousService } from 'src/app/shared/services/miscellaneous/miscellaneous.service';
 
 @Component({
   selector: 'app-add-movie',
@@ -22,6 +25,18 @@ import { LoadingHelperService } from 'src/app/shared/services/loading/loading-he
 })
 export class AddMovieComponent implements OnInit {
   
+  movie: FirestoreMovie = {
+    uid: '',
+    title: '',
+    videoUrl: '',
+    imgUrl: '',
+    genre: [],
+    uploadedByUid: '',
+    uploadedDate: undefined,
+    releasedYear: 0,
+    private: true
+  };
+  movieUid: string | null = null;
   movieForm: any;
   booleanEnumList = Object.values(BooleanEnum);
   categoryList = this.fixSortAlphabetThenNumber(Object.values(CategoryEnum).sort());
@@ -29,13 +44,18 @@ export class AddMovieComponent implements OnInit {
   categoryMultiselectSettings: IDropdownSettings = {};
   releaseYearMultiselectSettings: IDropdownSettings = {};
   yearList: number[] = this.getYearList(1800, new Date().getFullYear()).sort((a, b) => b - a);
+  booleanList: boolean[] = [true, false];
 
   constructor(public authService: AuthService,
     public firestoreService: FirestoreService, 
     public loadingHelperService: LoadingHelperService, 
-    public firestoreMoviesService: FirestoreMoviesService,
+    public firestoreCollectionManagementService: FirestoreCollectionManagementService,
+    public route: ActivatedRoute,
     public formBuilder: FormBuilder,
-    private modalService: MdbModalService) { }
+    private modalService: MdbModalService,
+    public miscellaneousService: MiscellaneousService) {
+      this.buildMovieForm(this.movie);
+    }
 
   ngOnInit(): void {
 
@@ -50,8 +70,20 @@ export class AddMovieComponent implements OnInit {
       singleSelection: true,
     };
 
-    this.loadingHelperService.removeLoadingOverlay();
-    this.buildAddMovieForm();
+    this.route.paramMap.subscribe(async (params: ParamMap) => {
+      this.movieUid = params.get('uid');
+
+      if (this.movieUid) {
+        let movie = await this.firestoreCollectionManagementService.get(FirestoreCollection.Movie, this.movieUid) as FirestoreMovie;
+        this.buildMovieForm(movie);
+        this.loadingHelperService.removeLoadingOverlay();
+        
+      } else {
+        this.movie.uploadedByUid = this.authService.userData.uid;
+        this.buildMovieForm(this.movie);
+        this.loadingHelperService.removeLoadingOverlay();
+      }
+    })
   }
 
   fixSortAlphabetThenNumber(list: string[]) {
@@ -66,7 +98,6 @@ export class AddMovieComponent implements OnInit {
         break;
       }
     }
-
     return list;
   }
 
@@ -78,16 +109,16 @@ export class AddMovieComponent implements OnInit {
     return yearList;
   }
 
-  buildAddMovieForm(): void {
+  buildMovieForm(movie: FirestoreMovie): void {
     this.movieForm = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.minLength(1)]],
-      genre: [[], [Validators.required]],
-      imgUrl: ['', [Validators.required]],
-      videoUrl: ['', [Validators.required, Validators.minLength(1)]],
-      releasedYear: [null, [Validators.required]],
-      uploadedByUid: [this.authService.userData.uid, [Validators.required]],
-      uploadedDate: [new Date().toUTCString()],
-      private: [BooleanEnum.true, [Validators.required]]
+      title: [movie.title, [Validators.required, Validators.minLength(1)]],
+      genre: [movie.genre, [Validators.required]],
+      imgUrl: [movie.imgUrl, [Validators.required]],
+      videoUrl: [movie.videoUrl, [Validators.required, Validators.minLength(1)]],
+      releasedYear: [movie.releasedYear === 0 ? [] : [movie.releasedYear], [Validators.required]],
+      uploadedByUid: [movie.uploadedByUid, [Validators.required]],
+      uploadedDate: [movie.uploadedDate],
+      private: [movie.private, [Validators.required]]
     });
   }
 
@@ -103,15 +134,25 @@ export class AddMovieComponent implements OnInit {
   }
 
   onSubmit() {
-    this.movieForm.value.uploadedDate = new Date();
     this.movieForm.value.releasedYear = this.movieForm.value.releasedYear[0];
-
-    if(this.movieForm.valid) { 
-      this.firestoreMoviesService.addMovie(this.movieForm.value).then(() => {
-        this.openModal(ModalPopupType.Success, "Added Successfully", ModalPopupType.Success, true);
-      }).catch(() => {
-        this.openModal(ModalPopupType.Error, "Error while Adding", ModalPopupType.Error);
-      });
+    console.log(this.movieForm);
+    if (this.movieUid) {
+      if (this.movieForm.valid) {
+        this.firestoreCollectionManagementService.update(FirestoreCollection.Movie, this.movieUid, this.movieForm.value).then(() => {
+          this.openModal(ModalPopupType.Success, "Updated Successfully", ModalPopupType.Success, true);
+        }).catch(() => {
+          this.openModal(ModalPopupType.Error, "Error while Adding", ModalPopupType.Error);
+        });
+      }
+    } else {
+      this.movieForm.value.uploadedDate = new Date();
+      if (this.movieForm.valid) {
+        this.firestoreCollectionManagementService.add(FirestoreCollection.Movie, this.movieForm.value).then(() => {
+          this.openModal(ModalPopupType.Success, "Added Successfully", ModalPopupType.Success, true);
+        }).catch(() => {
+          this.openModal(ModalPopupType.Error, "Error while Adding", ModalPopupType.Error);
+        });
+      }
     }
   }
 }

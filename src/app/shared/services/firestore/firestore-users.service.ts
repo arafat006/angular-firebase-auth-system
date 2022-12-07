@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { first, map, Observable } from 'rxjs';
-import { FirebaseCollection } from '../../enums/firebase-collection';
+import { FirestoreCollection } from '../../enums/firestore-collection';
 import { Role } from '../../enums/role';
 import { FirestoreUser } from '../../models/firestore-user';
 import { AuthService } from '../auth.service'; 
@@ -20,23 +20,23 @@ export class FirestoreUsersService {
   }
 
   getAllUsers() {
-    return this.angularFirestore.collection<any>(FirebaseCollection.User,
+    return this.angularFirestore.collection<any>(FirestoreCollection.User,
       ref => ref.orderBy("email")
     ).valueChanges();
   }  
 
   getUser(uid: string) {
-    return this.angularFirestore.collection(FirebaseCollection.User).doc(uid).get();
+    return this.angularFirestore.collection(FirestoreCollection.User).doc(uid).get();
   }  
 
   updateUser(uid: string, user: FirestoreUser) {
-    return this.angularFirestore.collection(FirebaseCollection.User).doc(uid).update(user);
+    return this.angularFirestore.collection(FirestoreCollection.User).doc(uid).update(user);
   }  
 
   rolePromise = new Promise<void>((resolve, reject) => {
     this.authService.authPromise.then(() => {
       if (this.authService.isLoggedIn === true) {
-        const userRef = this.angularFirestore.collection(FirebaseCollection.User).doc(this.authService.userData.uid);
+        const userRef = this.angularFirestore.collection(FirestoreCollection.User).doc(this.authService.userData.uid);
         userRef.get().subscribe(user => {
           if (user.exists) {
             this.firestoreUser = user.data() as FirestoreUser;

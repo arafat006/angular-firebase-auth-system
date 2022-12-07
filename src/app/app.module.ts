@@ -32,7 +32,8 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { AddMovieComponent } from './components/add-movie/add-movie.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MoviesComponent } from './components/movies/movies.component';
-import { MovieTheaterComponent } from './components/movie-theater/movie-theater.component';
+import { SafePipe } from './shared/pipes/safe.pipe';
+import { ManageMoviesComponent } from './components/manage-movies/manage-movies.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MovieTheaterComponent } from './components/movie-theater/movie-theater.
     EditUserComponent,
     AddMovieComponent,
     MoviesComponent,
-    MovieTheaterComponent,
+    SafePipe,
+    ManageMoviesComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

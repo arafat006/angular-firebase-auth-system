@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { FirebaseCollection } from '../../enums/firebase-collection';
+import { FirestoreCollection } from '../../enums/firestore-collection';
 import { Book } from '../../models/book';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class FirestoreService {
 
   }
 
-  getDocumentsByList(collection: FirebaseCollection, matchProperty: string, list: any[]) {
+  getDocumentsByList(collection: FirestoreCollection, matchProperty: string, list: any[]) {
     return new Promise<any>((resolve) => {
       this.angularFirestore.collection<any>(collection,
         ref => ref.where(matchProperty, 'in', list)
@@ -20,7 +20,7 @@ export class FirestoreService {
     });
   }
 
-  // getDocumentsByList(collection: FirebaseCollection, matchProperty: string, list: any) {
+  // getDocumentsByList(collection: FirestoreCollection, matchProperty: string, list: any) {
   //   return new Promise<any>((resolve) => {
   //     this.angularFirestore.collection(collection, ref => ref.where('uid', '==', list)).valueChanges({ idField: 'id' }).subscribe(users => resolve(users));
   //   })

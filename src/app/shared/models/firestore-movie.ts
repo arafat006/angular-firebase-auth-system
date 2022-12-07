@@ -1,7 +1,7 @@
 import { FirestoreUploader } from "./firestore-uploader";
 
 export interface FirestoreMovie {
-    uid: string;
+    uid: string | null;
     title: string;
     videoUrl: string;
     imgUrl: string;

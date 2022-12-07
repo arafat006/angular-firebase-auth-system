@@ -1,5 +1,5 @@
 <form [formGroup]="movieForm" class="add-movie-form" (ngSubmit)="onSubmit()">
-    <h4 class="text-center">Add Movie</h4>
+    <h4 class="text-center"> {{ movieUid ? 'Update' : 'Add' }} Movie</h4>
     <hr>
 
     <div class="mb-3">
@@ -10,7 +10,7 @@
     <div class="mb-3">
         <label for="genre" class="form-label">Genre</label>
         <div class="ng-multiselect-dropdown-parent">
-            <ng-multiselect-dropdown class="ng-multiselect-dropdown" formControlName="genre" [settings]="categoryMultiselectSettings" [data]="categoryList" >
+            <ng-multiselect-dropdown class="ng-multiselect-dropdown" [formControl]="movieForm.controls['genre']" [settings]="categoryMultiselectSettings" [data]="categoryList" >
             </ng-multiselect-dropdown>
         </div>
     </div>
@@ -18,7 +18,7 @@
     <div class="mb-3">
         <label for="releasedYear" class="form-label">Released Year</label>
         <div class="ng-multiselect-dropdown-parent">
-            <ng-multiselect-dropdown class="ng-multiselect-dropdown" formControlName="releasedYear" [settings]="releaseYearMultiselectSettings" [data]="yearList" >
+            <ng-multiselect-dropdown class="ng-multiselect-dropdown" [formControl]="movieForm.controls['releasedYear']" [settings]="releaseYearMultiselectSettings" [data]="yearList" >
             </ng-multiselect-dropdown>
         </div>
     </div>
@@ -36,9 +36,9 @@
     <div class="mb-3">
         <label for="private" class="form-label">Private</label>
         <select formControlName="private" class="form-select" aria-label="Default private">
-            <option *ngFor="let booleanEnum of booleanEnumList" [ngValue]="booleanEnum" [selected]="booleanEnum === movieForm.value.private">{{ booleanEnum }}</option>
+            <option *ngFor="let boolean of booleanList" [ngValue]="boolean" [selected]="boolean === movieForm.value.private">{{ miscellaneousService.BooleanCustomConverter(boolean) }}</option>
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" class="btn btn-primary" [disabled]="(!movieForm.dirty || !movieForm.valid)">{{movieUid ? 'Update' : 'Add'}}</button>
 </form>
