@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { BooleanEnum } from 'src/app/shared/enums/boolean.enum';
@@ -51,6 +51,7 @@ export class AddMovieComponent implements OnInit {
     public loadingHelperService: LoadingHelperService, 
     public firestoreCollectionManagementService: FirestoreCollectionManagementService,
     public route: ActivatedRoute,
+    public router: Router,
     public formBuilder: FormBuilder,
     private modalService: MdbModalService,
     public miscellaneousService: MiscellaneousService) {
@@ -73,16 +74,24 @@ export class AddMovieComponent implements OnInit {
     this.route.paramMap.subscribe(async (params: ParamMap) => {
       this.movieUid = params.get('uid');
 
-      if (this.movieUid) {
-        let movie = await this.firestoreCollectionManagementService.get(FirestoreCollection.Movie, this.movieUid) as FirestoreMovie;
-        this.buildMovieForm(movie);
-        this.loadingHelperService.removeLoadingOverlay();
-        
-      } else {
-        this.movie.uploadedByUid = this.authService.userData.uid;
-        this.buildMovieForm(this.movie);
-        this.loadingHelperService.removeLoadingOverlay();
-      }
+      this.authService.authPromise.then(async () => {
+        if (this.movieUid) {
+          let movie = await this.firestoreCollectionManagementService.get(FirestoreCollection.Movie, this.movieUid) as FirestoreMovie;
+          
+          if (movie.uploadedByUid === this.authService.userData.uid) {
+            this.buildMovieForm(movie);
+            this.loadingHelperService.removeLoadingOverlay();
+          }
+          else {
+            this.router.navigate(['add-movie']);
+          }
+          
+        } else {
+          this.movie.uploadedByUid = this.authService.userData.uid;
+          this.buildMovieForm(this.movie);
+          this.loadingHelperService.removeLoadingOverlay();
+        }
+      }, () => { });
     })
   }
 
